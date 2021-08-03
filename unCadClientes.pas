@@ -246,11 +246,30 @@ begin
       if not Erro then
       begin
         try
-          IdMessage1.Subject := 'Dados do Cliente: ' + cdsClientesNome.AsString;
-          IdMessage1.Recipients.Clear;
-          IdMessage1.Recipients.Add.Address := cdsClientesEmail.AsString;
-          IdMessage1.MessageParts.Clear;
-          TIdAttachmentFile.Create(IdMessage1.MessageParts, 'XMLDadosCliente.xml');
+          with IdMessage1 do
+          begin
+            Subject := 'Dados do Cliente: ' + cdsClientesNome.AsString;
+            Recipients.Clear;
+            Recipients.Add.Address := cdsClientesEmail.AsString;
+
+            Body.Text := 'Dados do cliente' + #13#10 + #13#10 +
+                         'Nome: ' + cdsClientesNome.AsString + #13#10 +
+                         'Identidade: ' + cdsClientesIdentidade.AsString + #13#10 +
+                         'CPF: ' + cdsClientesCPF.AsString + #13#10 +
+                         'Telefone: ' + cdsClientesTelefone.AsString + #13#10 +
+                         'E-mail: ' + cdsClientesEmail.AsString + #13#10 +
+                         'CEP: ' + cdsClientesCEP.AsString + #13#10 +
+                         'Logradouro: ' + cdsClientesLogradouro.AsString + #13#10 +
+                         'Número: ' + cdsClientesNumero.AsString + #13#10 +
+                         'Complemento: ' + cdsClientesComplemento.AsString + #13#10 +
+                         'Bairro: ' + cdsClientesBairro.AsString + #13#10 +
+                         'Cidade: ' + cdsClientesCidade.AsString + #13#10 +
+                         'Estado: ' + cdsClientesEstado.AsString + #13#10 +
+                         'País: ' + cdsClientesPais.AsString;
+
+            MessageParts.Clear;
+            TIdAttachmentFile.Create(MessageParts, 'XMLDadosCliente.xml');
+          end;
 
           IdSMTP1.Host     := LerParametroIni('Host');
           IdSMTP1.Port     := StrToInt(LerParametroIni('Port'));

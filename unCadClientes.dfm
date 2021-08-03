@@ -408,8 +408,6 @@ object frmCadClientes: TfrmCadClientes
   end
   object IdMessage1: TIdMessage
     AttachmentEncoding = 'MIME'
-    Body.Strings = (
-      'Segue em anexo os dados do cliente cadastrado!')
     BccList = <>
     CharSet = 'ISO-8859-1'
     CCList = <>
