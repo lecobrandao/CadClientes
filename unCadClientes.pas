@@ -124,7 +124,10 @@ begin
   end
   else
   begin
+    btConsultarCEP.Caption := 'Aguarde...';
+    btConsultarCEP.Enabled := False;
     Screen.Cursor := crHourGlass;
+    Application.ProcessMessages;
 
     RespostaWS := TMemoryStream.Create;
     Retorno    := TStringList.Create;
@@ -162,6 +165,8 @@ begin
         end;
       end;
     finally
+      btConsultarCEP.Caption := 'Consultar CEP';
+      btConsultarCEP.Enabled := True;
       Screen.Cursor := crDefault;
       RespostaWS.Free;
       Retorno.Free;
@@ -180,8 +185,8 @@ var Erro: Boolean;
       CadIni := TIniFile.Create('.\CadClientes.ini');
       ConfiguracoesEmail := TMemo.Create(Self);
       try
-        ConfiguracoesEmail.Parent := frmCadClientes;
-        ConfiguracoesEmail.Top    := 5000;
+        ConfiguracoesEmail.Visible := False;
+        ConfiguracoesEmail.Parent  := frmCadClientes;
         CadIni.ReadSectionValues('Email', ConfiguracoesEmail.Lines);
         if ConfiguracoesEmail.Lines.Values[Parametro] = '' then
         begin
@@ -211,7 +216,10 @@ begin
 
   if MessageDlg('Deseja enviar os dados do cliente para o e-mail informado?', mtConfirmation, mbYesNo, 0) = mrYes then
   begin
+    btEnviarEmail.Caption := 'Aguarde...';
+    btEnviarEmail.Enabled := False;
     Screen.Cursor := crHourGlass;
+    Application.ProcessMessages;
     Erro := False;
     try
       try
@@ -291,6 +299,8 @@ begin
         end;
       end;
     finally
+      btEnviarEmail.Caption := 'Enviar e-mail';
+      btEnviarEmail.Enabled := True;
       Screen.Cursor := crDefault;
     end;
     if not Erro then
